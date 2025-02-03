@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nedtelling til 15. mai 2025</title>
+    <style>
+        body {
+            font-family: system-ui, -apple-system, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+        }
+        .card {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            max-width: 500px;
+            width: 90%;
+        }
+        .title {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+        }
+        .countdown-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+            text-align: center;
+        }
+        .countdown-item {
+            display: flex;
+            flex-direction: column;
+        }
+        .number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #333;
+        }
+        .label {
+            font-size: 0.875rem;
+            color: #666;
+        }
+    </style>
+<!-- 
+First version made on the way to working in 5 minutes!
+Using https://claude.ai version 3.5 Sonnet and the following prompts:
+- "Make a JavaScript app counting day, hours and minutes to 2025-05-15 12:00" 
+- "Could you draw a brown house over the counter"
+- "Could you make it in Norwegian"
+Then updated with:
+- "Make this code work in a indepent html file"
+- Added a "<br>" in the title
+-->
+</head>
+<body>
+    <div class="card">
+        <h1 class="title">Nedtelling til 15. mai 2025 </br>kl. 12:00</h1>
+        <svg viewBox="0 0 200 150" style="width: 200px; height: 150px; margin: 0 auto 20px; display: block;">
+            <!-- Roof -->
+            <path d="M20 70 L100 20 L180 70" fill="#8B4513" stroke="#654321" stroke-width="2"/>
+            <!-- House body -->
+            <rect x="40" y="70" width="120" height="80" fill="#8B4513" stroke="#654321" stroke-width="2"/>
+            <!-- Door -->
+            <rect x="85" y="100" width="30" height="50" fill="#654321" stroke="#3E2723" stroke-width="2"/>
+            <!-- Door knob -->
+            <circle cx="105" cy="125" r="2" fill="#3E2723"/>
+            <!-- Windows -->
+            <rect x="55" y="85" width="20" height="20" fill="#87CEEB" stroke="#3E2723" stroke-width="2"/>
+            <rect x="125" y="85" width="20" height="20" fill="#87CEEB" stroke="#3E2723" stroke-width="2"/>
+        </svg>
+        <div class="countdown-grid">
+            <div class="countdown-item">
+                <div class="number" id="days">0</div>
+                <div class="label">Dager</div>
+            </div>
+            <div class="countdown-item">
+                <div class="number" id="hours">0</div>
+                <div class="label">Timer</div>
+            </div>
+            <div class="countdown-item">
+                <div class="number" id="minutes">0</div>
+                <div class="label">Minutter</div>
+            </div>
+            <div class="countdown-item">
+                <div class="number" id="seconds">0</div>
+                <div class="label">Sekunder</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function updateCountdown() {
+            const targetDate = new Date('2025-05-15T12:00:00');
+            const now = new Date();
+            const difference = targetDate - now;
+
+            if (difference > 0) {
+                const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((difference / (1000 * 60 * 60)) % 24);
+                const minutes = Math.floor((difference / 1000 / 60) % 60);
+                const seconds = Math.floor((difference / 1000) % 60);
+
+                document.getElementById('days').textContent = days;
+                document.getElementById('hours').textContent = hours;
+                document.getElementById('minutes').textContent = minutes;
+                document.getElementById('seconds').textContent = seconds;
+            }
+        }
+
+        // Update immediately and then every second
+        updateCountdown();
+        setInterval(updateCountdown, 1000);
+    </script>
+</body>
+</html>
